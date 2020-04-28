@@ -11,7 +11,7 @@ struct Node<T> {
 
 impl<T> List<T> {
     pub fn new() -> Self {
-        List { head: Link::None }
+        List { head: None }
     }
 
     pub fn push(&mut self, elem: T) {
@@ -20,7 +20,7 @@ impl<T> List<T> {
             next: self.head.take(),
         };
 
-        self.head = Link::Some(Box::new(new_node));
+        self.head = Some(Box::new(new_node));
     }
 
     pub fn pop(&mut self) -> Option<T> {
@@ -56,22 +56,23 @@ mod test {
     fn basics() {
         let mut list = List::new();
 
-        assert_eq!(list.pop(), Option::None);
+        assert_eq!(list.pop(), None);
 
         list.push(1);
-        assert_eq!(list.peek(), Option::Some(&1));
+        assert_eq!(list.peek(), Some(&1));
         list.peek_mut().map(|value| *value = 42);
-        assert_eq!(list.peek(), Option::Some(&42));
+        assert_eq!(list.peek(), Some(&42));
         list.push(2);
         list.push(3);
         list.push(4);
 
-        assert_eq!(list.pop(), Option::Some(4));
-        assert_eq!(list.pop(), Option::Some(3));
-        assert_eq!(list.pop(), Option::Some(2));
-        assert_eq!(list.pop(), Option::Some(42));
+        assert_eq!(list.pop(), Some(4));
+        assert_eq!(list.pop(), Some(3));
+        assert_eq!(list.pop(), Some(2));
+        assert_eq!(list.pop(), Some(42));
 
-        assert_eq!(list.pop(), Option::None);
-        assert_eq!(list.pop(), Option::None);
+        assert_eq!(list.pop(), None);
+        assert_eq!(list.pop(), None);
+
     }
 }
